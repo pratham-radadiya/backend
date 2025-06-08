@@ -182,7 +182,7 @@ const refreshAccessToken = asyncHandler(async(req, res) => {
         throw new ApiError(401, "invalid refresh token")
     }
 
-    if(incomingRefreshToken !== user.refreshToken) {
+    if(incomingRefreshToken !== user?.refreshToken) {
         throw new ApiError(401, "Refresh token is expired or used")
     }
     const options = {
@@ -326,7 +326,7 @@ const getUserChannelProfile = asyncHandler(async(req, res) => {
         {
             $lookup: {
                 from: "subscriptions",
-                localField: "._id",
+                localField: "_id",
                 foreignField: "subscriber",
                 as: "subscribedTo"
             }
@@ -337,7 +337,7 @@ const getUserChannelProfile = asyncHandler(async(req, res) => {
                     $size: "$subscribers"
                 },
                 channelsSubscribedToCount: {
-                    $size: "subscribedTO"
+                    $size: "$subscribedTO"
                 },
                 isSubscribed: {
                     $cond: {
